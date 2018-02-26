@@ -51,17 +51,8 @@ def deltha():
         print "SUCCESS:" + j_obj["result"][hashvalue]['plain']
        except TypeError:
             print "Error finding a value: %s" % hashvalue
-                
-
-
-       
-
-
 
             
-
-
-    
 def beta():
     data = urlencode({"auth":"8272hgt", "hash":hashvalue, "string":"","Submit":"Submit"})
     html = urlopen("http://hashcrack.com/index.php" , data)
@@ -120,7 +111,6 @@ if args.path:
         for line in f:
             hashes.append(line.strip('\n'))
     for hashvalue in hashes:
-        #print hashes
         crack(hashvalue)
 else:
     hashvalue = raw_input('%s Enter your hash: ' % que).lower()
