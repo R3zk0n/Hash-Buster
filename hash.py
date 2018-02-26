@@ -5,6 +5,8 @@ import sys, argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--path", help="Enter the path of your hashes.txt here", dest='path')
 args = parser.parse_args()
+import json
+from pprint import pprint
 
 #Colors and shit like that
 white = '\033[1;97m'
@@ -17,6 +19,7 @@ bad = '\033[1;31m[-]\033[1;m'
 good = '\033[1;32m[+]\033[1;m'
 run = '\033[1;97m[>]\033[1;m'
 
+Hash_api = "XXXXX" # Get the API key from Hashes.org
 def omega():
     data = urlencode({"hash":hashvalue, "decrypt":"Decrypt"})
     html = urlopen("http://md5decrypt.net/en/Sha256/", data)
@@ -36,6 +39,29 @@ def Lambda():
     else:
         if not args.path:
             print "%s Sorry this hash is not present in our database." % bad
+
+
+def deltha():
+       bad_hashes = []
+       html = urlopen("https://hashes.org/api.php?key=%s&query=%s" % (Hash_api, hashvalue))
+       find = html.read()
+       j_obj = json.loads(find)
+       try:
+        print hashvalue + ":" + j_obj["result"][hashvalue]['plain']
+        print "SUCCESS:" + j_obj["result"][hashvalue]['plain']
+       except TypeError:
+            print "Error finding a value: %s" % hashvalue
+                
+
+
+       
+
+
+
+            
+
+
+    
 def beta():
     data = urlencode({"auth":"8272hgt", "hash":hashvalue, "string":"","Submit":"Submit"})
     html = urlopen("http://hashcrack.com/index.php" , data)
@@ -84,7 +110,7 @@ def crack(hashvalue):
     elif len(hashvalue) == 64:
         if not args.path:
             print "%s Hash function : SHA-256" % info
-        Lambda()
+        deltha()
     else:
         print "%s This hash is not supported." % bad
 
@@ -94,6 +120,7 @@ if args.path:
         for line in f:
             hashes.append(line.strip('\n'))
     for hashvalue in hashes:
+        #print hashes
         crack(hashvalue)
 else:
     hashvalue = raw_input('%s Enter your hash: ' % que).lower()
