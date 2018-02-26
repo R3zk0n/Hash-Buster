@@ -47,7 +47,8 @@ def deltha():
        find = html.read()
        j_obj = json.loads(find)
        try:
-        print hashvalue + ":" + j_obj["result"][hashvalue]['plain']
+        print hashvalue
+        print j_obj["result"][hashvalue]['plain']
         print "SUCCESS:" + j_obj["result"][hashvalue]['plain']
        except TypeError:
             print "Error finding a value: %s" % hashvalue
